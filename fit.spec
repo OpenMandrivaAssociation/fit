@@ -38,7 +38,7 @@
 Summary:        Framework for Integrated Test
 Name:           fit
 Version:        1.1
-Release:        %mkrel 1.0.3
+Release:        %mkrel 1.0.4
 Epoch:          0
 License:        GPL
 URL:            http://fit.c2.com/
@@ -51,8 +51,6 @@ BuildRequires:  jpackage-utils >= 0:1.6
 BuildRequires:  junit
 %if %{gcj_support}
 BuildRequires:          java-gcj-compat-devel
-Requires(post):         java-gcj-compat
-Requires(postun):       java-gcj-compat
 %endif
 %if ! %{gcj_support}
 BuildArch:      noarch
