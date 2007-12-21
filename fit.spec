@@ -55,6 +55,7 @@ BuildRequires:          java-gcj-compat-devel
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
+BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Great software requires collaboration and communication.
