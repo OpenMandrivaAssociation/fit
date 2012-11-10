@@ -1,0 +1,45 @@
+--- source/imp/java/build.xml.sav	2005-04-07 23:25:28.000000000 +0200
++++ source/imp/java/build.xml	2006-09-15 14:44:21.000000000 +0200
+@@ -36,7 +36,7 @@
+   ** build **
+   -->
+   <target name="build" depends="dirs" description="Build project">
+-    <javac srcdir="${source.dir}" destdir="${class.dir}" classpath="${junit.jar}" />
++    <javac encoding="CP1252" srcdir="${source.dir}" destdir="${class.dir}" classpath="${junit.jar}" />
+   </target>
+ 
+   <!-- 
+@@ -76,7 +76,7 @@
+   ** spec **
+   -->
+   <target name="spec" depends="build" description="Run Fit specification">
+-    <java classname="fit.FileRunner" classpath="${class.dir}" fork="true" failonerror="true" >
++    <java classname="fit.FileRunner" classpath="${class.dir}" fork="true" failonerror="false" >
+       <arg value="${spec.dir}/index.html"/>
+       <arg value="${spec-out.dir}/index.html"/>
+     </java>
+@@ -104,7 +104,7 @@
+   <!-- 
+   ** release **
+   -->
+-  <target name="release" depends="clean, build, test, spec, examples, jars" description="Create a tested release">
++  <target name="release" depends="clean, build, test, spec, examples, jars, javadoc" description="Create a tested release">
+     <copy todir="${release.dir}">
+       <fileset dir="${source.dir}" includes="${license.file}" />
+       <fileset dir="${jar.dir}" />
+@@ -146,4 +146,13 @@
+     <zip destfile="${output.dir}/fit-java.zip" basedir="${release.dir}" />
+   </target>
+ 
+-</project>
+\ No newline at end of file
++  <!-- == Generate javadoc ================================================ -->
++  <target name="javadoc" depends="build">
++    <javadoc destdir="${doc.dir}/api">
++      <fileset dir="${source.dir}" defaultexcludes="yes">
++        <include name="fit/**" />
++      </fileset>
++  </javadoc>
++  </target>
++
++</project>
