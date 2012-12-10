@@ -38,7 +38,7 @@
 Summary:        Framework for Integrated Test
 Name:           fit
 Version:        1.1
-Release:        %mkrel 1.0.7
+Release:        1.0.8
 Epoch:          0
 License:        GPL
 URL:            http://fit.c2.com/
@@ -49,13 +49,13 @@ BuildRequires:  ant
 BuildRequires:  ant-junit
 BuildRequires:  java-rpmbuild >= 0:1.6
 BuildRequires:  junit
+BuildRequires:  locales-en
 %if %{gcj_support}
 BuildRequires:          java-gcj-compat-devel
 %endif
 %if ! %{gcj_support}
 BuildArch:      noarch
 %endif
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}-root
 
 %description
 Great software requires collaboration and communication.
@@ -86,12 +86,13 @@ Group:          Development/Java
 %setup -c -q -n %{name}-%{version}
 # remove all binary libs
 find . -name "*.jar" -exec rm -f {} \;
-%patch0 -b .sav
+%patch0 -p0 -b .sav
 %{_bindir}/find . -name '*.css' -o -name '*.html' -o -name '*.txt' | \
   %{_bindir}/xargs -t %{__perl} -pi -e 's/\r$//g'
 %{__perl} -pi -e 's/fork="true"/fork="false"/g' source/imp/java/build.xml
 
 %build
+export LC_ALL=ISO-8859-1
 export CLASSPATH=$(build-classpath junit):`pwd`/source/imp/java/output/jars/fit.jar
 export OPT_JAR_LIST="ant/ant-junit"
 pushd source/imp/java
@@ -106,8 +107,6 @@ pushd source/imp/java
 popd
 
 %install
-rm -rf $RPM_BUILD_ROOT
-
 # jars
 mkdir -p $RPM_BUILD_ROOT%{_javadir}
 
@@ -159,3 +158,51 @@ rm -rf $RPM_BUILD_ROOT
 %files manual
 %defattr(0644,root,root,0755)
 %doc %{_docdir}/%{name}-%{version}
+
+
+%changelog
+* Thu Dec 09 2010 Oden Eriksson <oeriksson@mandriva.com> 0:1.1-1.0.7mdv2011.0
++ Revision: 618289
+- the mass rebuild of 2010.0 packages
+
+* Thu Sep 03 2009 Thierry Vignaud <tv@mandriva.org> 0:1.1-1.0.6mdv2010.0
++ Revision: 428795
+- rebuild
+
+* Fri Dec 21 2007 Olivier Blin <oblin@mandriva.com> 0:1.1-1.0.5mdv2009.0
++ Revision: 136415
+- restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Sun Dec 16 2007 Anssi Hannula <anssi@mandriva.org> 0:1.1-1.0.5mdv2008.1
++ Revision: 120878
+- buildrequire java-rpmbuild, i.e. build with icedtea on x86(_64)
+
+* Sat Sep 15 2007 Anssi Hannula <anssi@mandriva.org> 0:1.1-1.0.4mdv2008.0
++ Revision: 87374
+- rebuild to filter out autorequires of GCJ AOT objects
+- remove unnecessary Requires(post) on java-gcj-compat
+
+* Sat Aug 04 2007 David Walluck <walluck@mandriva.org> 0:1.1-1.0.3mdv2008.0
++ Revision: 58779
+- bump release
+
+* Thu Aug 02 2007 David Walluck <walluck@mandriva.org> 0:1.1-1.0.2mdv2008.0
++ Revision: 58332
+- Import fit
+
+
+
+* Tue Jul 10 2007 Alexander Kurtakov <akurtakov@active-lynx.com> - 0:1.1-1.0.2mdv2008.0
+- Fix Group
+
+* Tue Jul 10 2007 Alexander Kurtakov <akurtakov@active-lynx.com> - 0:1.1-1.0.1mdv2008.0
+- Use mdv macros
+- Disable test
+
+* Wed Sep 20 2006 Ralph Apel <r.apel@r-apel.de> - 0:1.1-1jpp
+- First JPackage build
+- Add post/postun Requires for javadoc
+- Add gcj_support option
