@@ -38,7 +38,7 @@
 Summary:        Framework for Integrated Test
 Name:           fit
 Version:        1.1
-Release:        1.0.8
+Release:        1.0.9
 Epoch:          0
 License:        GPL
 URL:            http://fit.c2.com/
