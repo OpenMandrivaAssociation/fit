@@ -41,7 +41,7 @@ Version:        1.1
 Release:        1.0.9
 Epoch:          0
 License:        GPL
-URL:            http://fit.c2.com/
+URL:            https://fit.c2.com/
 Group:          Development/Java
 Source0:        http://prdownloads.sourceforge.net/fit/fit-java-1.1.zip
 Patch0:         fit-1.1-build_xml.patch
